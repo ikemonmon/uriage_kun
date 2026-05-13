@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
 --bg:           #EDF0EF;
 --card:         #FFFFFF;
@@ -21,593 +20,222 @@
 --border:       #DCDEDD;
 --border-light: #EAECEA;
 --danger:       #DC2626;
+--warn-bg:      #FEF3C7;
+--warn-text:    #92400E;
 --font:         'M PLUS 1', sans-serif;
 --radius-card:  14px;
 --radius-btn:   8px;
 }
+body { background:var(--bg); font-family:var(--font); color:var(--text); min-height:100vh; padding-bottom:56px; -webkit-font-smoothing:antialiased; }
 
-body {
-background: var(--bg);
-font-family: var(--font);
-color: var(--text);
-min-height: 100vh;
-padding-bottom: 56px;
--webkit-font-smoothing: antialiased;
-}
-
+/* –– ヘッダー –– */
 .header {
-background: var(--card);
-border-bottom: 1px solid var(--border);
-padding: 13px 16px;
+background: var(–card);
+border-bottom: 1px solid var(–border);
+padding: 0 16px;
+height: 52px;
 display: flex;
-justify-content: space-between;
 align-items: center;
+gap: 10px;
 position: sticky;
 top: 0;
 z-index: 20;
 }
 
-.logo {
-font-size: 17px;
+/* セット名ボタン：flex:1 で余白を全部使い、溢れを隠す */
+.btn-set-switch {
+flex: 1;
+min-width: 0;
+display: flex;
+align-items: center;
+gap: 5px;
+background: none;
+border: none;
+padding: 0;
+cursor: pointer;
+font-family: var(–font);
 font-weight: 700;
-letter-spacing: 0.03em;
-color: var(--accent);
+color: var(–accent);
+letter-spacing: 0.02em;
 line-height: 1;
+text-align: left;
+overflow: hidden;
 }
-.logo em { font-style: normal; color: var(--accent); }
+.btn-set-switch:active { opacity: .5; }
+
+/* テキスト部分：whitespace nowrapで1行維持、フォントサイズはJSで調整 */
+.title-set-name {
+white-space: nowrap;
+font-size: 19px; /* JS で上書き */
+overflow: hidden;
+}
+
+/* chevronは固定サイズ・縮まない */
+.title-chevron {
+flex-shrink: 0;
+color: var(–accent);
+opacity: .70;
+display: flex;
+align-items: center;
+}
 
 .btn-ghost {
+flex-shrink: 0;
 background: none;
-border: 1.5px solid var(--border);
-color: var(--text-sub);
-font-family: var(--font);
+border: 1.5px solid var(–border);
+color: var(–text-sub);
+font-family: var(–font);
 font-size: 12px;
 font-weight: 500;
 padding: 6px 14px;
 border-radius: 20px;
 cursor: pointer;
-letter-spacing: 0.02em;
 }
-.btn-ghost:active { opacity: 0.65; }
+.btn-ghost:active { opacity: .65; }
 
-.content {
-padding: 12px 14px;
-display: flex;
-flex-direction: column;
-gap: 10px;
-}
-
-.card {
-background: var(--card);
-border-radius: var(--radius-card);
-border: 1px solid var(--border-light);
-box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-overflow: hidden;
-}
-
+/* –– コンテンツ –– */
+.content { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+.card { background: var(–card); border-radius: var(–radius-card); border: 1px solid var(–border-light); box-shadow: 0 1px 3px rgba(0,0,0,0.04); overflow: hidden; }
 .card-body { padding: 14px 15px; }
-
-.input-row {
-display: flex;
-align-items: center;
-gap: 8px;
-padding: 0 0 9px;
-}
+.input-row { display: flex; align-items: center; gap: 8px; padding: 0 0 9px; }
 .input-row:last-child { padding-bottom: 0; }
-
-.input-label {
-font-size: 12px;
-font-weight: 600;
-color: var(--text-sub);
-min-width: 42px;
-flex-shrink: 0;
-letter-spacing: 0.02em;
-}
-
-.input-field {
-flex: 1;
-border: 1.5px solid var(--border);
-border-radius: var(--radius-btn);
-padding: 9px 11px;
-font-family: var(--font);
-font-size: 16px;
-font-weight: 400;
-color: var(--text);
-background: var(--bg);
-outline: none;
-transition: border-color .15s, background .15s, box-shadow .15s;
--webkit-appearance: none;
-min-width: 0;
-}
-.input-field::placeholder { color: var(--text-xs); }
-.input-field:focus {
-border-color: var(--accent);
-background: #fff;
-box-shadow: 0 0 0 3px rgba(42,157,143,.10);
-}
-
-.input-unit {
-font-size: 12px;
-color: var(--text-sub);
-min-width: 18px;
-flex-shrink: 0;
-}
-
-.btn-camera {
-width: 36px;
-height: 36px;
-border-radius: var(--radius-btn);
-border: 1.5px solid var(--border);
-background: #fff;
-color: var(--text-sub);
-cursor: pointer;
-display: flex;
-align-items: center;
-justify-content: center;
-flex-shrink: 0;
-transition: border-color .15s, background .15s, color .15s;
-padding: 0;
-position: relative;
-}
+.input-label { font-size: 12px; font-weight: 600; color: var(–text-sub); min-width: 42px; flex-shrink: 0; letter-spacing: .02em; }
+.input-field { flex: 1; border: 1.5px solid var(–border); border-radius: var(–radius-btn); padding: 9px 11px; font-family: var(–font); font-size: 16px; color: var(–text); background: var(–bg); outline: none; -webkit-appearance: none; min-width: 0; transition: border-color .15s, background .15s, box-shadow .15s; }
+.input-field::placeholder { color: var(–text-xs); }
+.input-field:focus { border-color: var(–accent); background: #fff; box-shadow: 0 0 0 3px rgba(42,157,143,.10); }
+.input-unit { font-size: 12px; color: var(–text-sub); min-width: 18px; flex-shrink: 0; }
+.btn-camera { width: 36px; height: 36px; border-radius: var(–radius-btn); border: 1.5px solid var(–border); background: #fff; color: var(–text-sub); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; position: relative; transition: border-color .15s, background .15s, color .15s; }
 .btn-camera:active { opacity: .65; }
-.btn-camera.has-photo {
-border-color: var(--accent);
-background: var(--accent-light);
-color: var(--accent);
-}
-.btn-camera.has-photo::after {
-content: '';
-position: absolute;
-top: 4px; right: 4px;
-width: 6px; height: 6px;
-background: var(--accent);
-border-radius: 50%;
-border: 1.5px solid var(--accent-light);
-}
-
-.btn-confirm {
-background: var(--accent);
-color: #fff;
-border: none;
-border-radius: var(--radius-btn);
-padding: 9px 15px;
-font-family: var(--font);
-font-size: 13px;
-font-weight: 700;
-cursor: pointer;
-flex-shrink: 0;
-letter-spacing: 0.04em;
-transition: background .15s;
-white-space: nowrap;
-}
-.btn-confirm:hover  { background: var(--accent-dark); }
+.btn-camera.has-photo { border-color: var(–accent); background: var(–accent-light); color: var(–accent); }
+.btn-camera.has-photo::after { content: ‘’; position: absolute; top: 4px; right: 4px; width: 6px; height: 6px; background: var(–accent); border-radius: 50%; border: 1.5px solid var(–accent-light); }
+.btn-confirm { background: var(–accent); color: #fff; border: none; border-radius: var(–radius-btn); padding: 9px 15px; font-family: var(–font); font-size: 13px; font-weight: 700; cursor: pointer; flex-shrink: 0; letter-spacing: .04em; white-space: nowrap; transition: background .15s; }
+.btn-confirm:hover { background: var(–accent-dark); }
 .btn-confirm:active { opacity: .75; }
 
-/* -- 集計バー -- */
-.summary-bar {
-display: flex;
-align-items: center;
-background: var(--accent-light);
-padding: 13px 15px;
-}
+/* –– 集計 –– */
+.summary-bar { display: flex; align-items: center; background: var(–accent-light); padding: 13px 15px; }
+.summary-tag { font-size: 9px; font-weight: 700; letter-spacing: .14em; color: var(–accent); text-transform: uppercase; margin-right: 13px; flex-shrink: 0; }
+.s-val { font-size: 21px; font-weight: 700; color: var(–accent); letter-spacing: -.01em; line-height: 1; }
+.s-val small { font-size: 11px; font-weight: 500; margin-left: 1px; letter-spacing: 0; }
+.summary-sep { font-size: 13px; color: rgba(42,157,143,.40); margin: 0 12px; flex-shrink: 0; }
+.s-uprice { margin-left: auto; font-size: 13px; font-weight: 600; color: rgba(42,157,143,.68); letter-spacing: .01em; flex-shrink: 0; line-height: 1; }
 
-.summary-tag {
-font-size: 9px;
-font-weight: 700;
-letter-spacing: 0.14em;
-color: var(--accent);
-text-transform: uppercase;
-margin-right: 13px;
-flex-shrink: 0;
-}
-
-.s-val {
-font-size: 21px;
-font-weight: 700;
-color: var(--accent);
-letter-spacing: -0.01em;
-line-height: 1;
-}
-.s-val small {
-font-size: 11px;
-font-weight: 500;
-margin-left: 1px;
-letter-spacing: 0;
-}
-
-.summary-sep {
-font-size: 13px;
-color: rgba(42,157,143,.45);
-margin: 0 12px;
-flex-shrink: 0;
-}
-
-/* 質量単価：右端に配置 */
-.s-uprice {
-margin-left: auto;
-font-size: 13px;
-font-weight: 600;
-color: rgba(42,157,143,.70);
-letter-spacing: 0.01em;
-flex-shrink: 0;
-line-height: 1;
-}
-
-/* -- 履歴ヘッダー -- */
-.hist-header {
-display: flex;
-align-items: center;
-justify-content: flex-end;
-gap: 5px;
-padding: 9px 11px;
-border-bottom: 1px solid var(--border-light);
-}
-
-.btn-tool {
-width: 34px;
-height: 34px;
-border: 1.5px solid var(--border);
-background: #fff;
-color: var(--text-sub);
-border-radius: 50%;
-cursor: pointer;
-display: flex;
-align-items: center;
-justify-content: center;
-flex-shrink: 0;
-padding: 0;
-}
+/* –– 履歴 –– */
+.hist-header { display: flex; align-items: center; justify-content: flex-end; gap: 5px; padding: 9px 11px; border-bottom: 1px solid var(–border-light); }
+.btn-tool { width: 34px; height: 34px; border: 1.5px solid var(–border); background: #fff; color: var(–text-sub); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; }
 .btn-tool:active { opacity: .65; }
-
 .hist-body { padding: 7px 9px; }
-
-.history-empty {
-text-align: center;
-color: var(--text-xs);
-font-size: 13px;
-padding: 28px 0;
-letter-spacing: 0.02em;
-}
-
-/* -- 履歴アイテム -- */
-.h-item {
-position: relative;
-border: 1px solid var(--border-light);
-border-radius: 10px;
-padding: 6px 10px;
-margin-bottom: 5px;
-}
+.history-empty { text-align: center; color: var(–text-xs); font-size: 13px; padding: 28px 0; letter-spacing: .02em; }
+.h-item { position: relative; border: 1px solid var(–border-light); border-radius: 10px; padding: 6px 10px; margin-bottom: 5px; }
 .h-item:last-child { margin-bottom: 0; }
-
-.h-item.has-photo {
-padding-right: 70px;
-}
-
-.h-r1 {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 1px;
-}
-
-.h-id {
-font-size: 10px;
-font-weight: 700;
-color: var(--accent);
-background: var(--accent-light);
-padding: 2px 8px;
-border-radius: 4px;
-letter-spacing: 0.04em;
-}
-
-.h-dt {
-font-size: 10px;
-color: var(--text-xs);
-letter-spacing: 0.01em;
-}
-
-.h-r2 {
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 8px;
-}
-
-.h-vals {
-display: flex;
-align-items: baseline;
-gap: 10px;
-flex-shrink: 0;
-}
-
-.h-num {
-font-size: 16px;
-font-weight: 600;
-color: var(--text);
-line-height: 1;
-}
-.h-num small {
-font-size: 10px;
-font-weight: 400;
-color: var(--text-sub);
-margin-left: 1px;
-}
-
-/* サムネイル：絶対配置・縦中央 */
-.h-thumb {
-position: absolute;
-right: 10px;
-top: 50%;
-transform: translateY(-50%);
-width: 52px;
-height: 52px;
-border-radius: 6px;
-object-fit: cover;
-border: 1px solid var(--border-light);
-cursor: pointer;
-display: block;
-}
+.h-item.has-photo { padding-right: 70px; }
+.h-r1 { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1px; }
+.h-id { font-size: 10px; font-weight: 700; color: var(–accent); background: var(–accent-light); padding: 2px 8px; border-radius: 4px; letter-spacing: .04em; }
+.h-dt { font-size: 10px; color: var(–text-xs); }
+.h-r2 { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.h-vals { display: flex; align-items: baseline; gap: 10px; flex-shrink: 0; }
+.h-num { font-size: 16px; font-weight: 600; color: var(–text); line-height: 1; }
+.h-num small { font-size: 10px; font-weight: 400; color: var(–text-sub); margin-left: 1px; }
+.h-thumb { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 6px; object-fit: cover; border: 1px solid var(–border-light); cursor: pointer; display: block; }
 .h-thumb:active { opacity: .75; }
-
-.h-btns {
-display: flex;
-gap: 5px;
-flex-shrink: 0;
-}
-
-.btn-edit {
-border: 1.5px solid var(--border);
-background: #fff;
-color: var(--text-sub);
-border-radius: 6px;
-padding: 4px 10px;
-font-family: var(--font);
-font-size: 11px;
-font-weight: 500;
-cursor: pointer;
-}
-
-.btn-del {
-border: none;
-background: var(--accent-light);
-color: var(--accent-dark);
-border-radius: 6px;
-padding: 4px 10px;
-font-family: var(--font);
-font-size: 11px;
-font-weight: 500;
-cursor: pointer;
-}
+.h-btns { display: flex; gap: 5px; flex-shrink: 0; }
+.btn-edit { border: 1.5px solid var(–border); background: #fff; color: var(–text-sub); border-radius: 6px; padding: 4px 10px; font-family: var(–font); font-size: 11px; font-weight: 500; cursor: pointer; }
+.btn-del { border: none; background: var(–accent-light); color: var(–accent-dark); border-radius: 6px; padding: 4px 10px; font-family: var(–font); font-size: 11px; font-weight: 500; cursor: pointer; }
 .btn-del:active { opacity: .75; }
+.h-note { margin-top: 3px; font-size: 12px; color: var(–text-sub); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-.h-note {
-margin-top: 3px;
-font-size: 12px;
-color: var(--text-sub);
-padding-left: 2px;
-overflow: hidden;
-text-overflow: ellipsis;
-white-space: nowrap;
-}
-
-/* -- モーダル共通 -- */
-.modal-overlay {
-display: none;
-position: fixed;
-inset: 0;
-background: rgba(15,20,17,0.42);
-z-index: 100;
-align-items: center;
-justify-content: center;
-padding: 20px;
-backdrop-filter: blur(3px);
-}
+/* –– モーダル共通 –– */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,20,17,0.42); z-index: 100; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(3px); }
 .modal-overlay.active { display: flex; }
-
-.modal {
-background: var(--card);
-border-radius: 18px;
-padding: 22px 20px 18px;
-width: 100%;
-max-width: 340px;
-box-shadow: 0 24px 64px rgba(0,0,0,0.16);
-}
-
-.modal-title {
-font-size: 15px;
-font-weight: 700;
-margin-bottom: 7px;
-letter-spacing: 0.02em;
-}
-
-.modal-body {
-font-size: 13px;
-color: var(--text-sub);
-margin-bottom: 18px;
-line-height: 1.75;
-}
-
+.modal { background: var(–card); border-radius: 18px; padding: 22px 20px 18px; width: 100%; max-width: 340px; box-shadow: 0 24px 64px rgba(0,0,0,0.16); }
+.modal-title { font-size: 15px; font-weight: 700; margin-bottom: 7px; letter-spacing: .02em; }
+.modal-sub { font-size: 12px; color: var(–text-sub); margin-bottom: 10px; line-height: 1.6; }
+.modal-body { font-size: 13px; color: var(–text-sub); margin-bottom: 18px; line-height: 1.75; }
 .modal-actions { display: flex; gap: 8px; }
-
-.btn-cancel {
-flex: 1;
-background: var(--bg);
-border: 1.5px solid var(--border);
-color: var(--text-sub);
-border-radius: 10px;
-padding: 12px;
-font-family: var(--font);
-font-size: 14px;
-font-weight: 500;
-cursor: pointer;
-}
-
-.btn-danger-ok {
-flex: 1;
-background: var(--danger);
-color: #fff;
-border: none;
-border-radius: 10px;
-padding: 12px;
-font-family: var(--font);
-font-size: 14px;
-font-weight: 700;
-cursor: pointer;
-}
-
-.btn-primary-ok {
-flex: 1;
-background: var(--accent);
-color: #fff;
-border: none;
-border-radius: 10px;
-padding: 12px;
-font-family: var(--font);
-font-size: 14px;
-font-weight: 700;
-cursor: pointer;
-}
-
+.btn-cancel { flex: 1; background: var(–bg); border: 1.5px solid var(–border); color: var(–text-sub); border-radius: 10px; padding: 12px; font-family: var(–font); font-size: 14px; font-weight: 500; cursor: pointer; }
+.btn-danger-ok { flex: 1; background: var(–danger); color: #fff; border: none; border-radius: 10px; padding: 12px; font-family: var(–font); font-size: 14px; font-weight: 700; cursor: pointer; }
+.btn-primary-ok { flex: 1; background: var(–accent); color: #fff; border: none; border-radius: 10px; padding: 12px; font-family: var(–font); font-size: 14px; font-weight: 700; cursor: pointer; }
+.modal-input { width: 100%; border: 1.5px solid var(–border); border-radius: var(–radius-btn); padding: 10px 11px; font-family: var(–font); font-size: 16px; color: var(–text); background: var(–bg); outline: none; -webkit-appearance: none; transition: border-color .15s; }
+.modal-input:focus { border-color: var(–accent); }
 .modal-field { margin-bottom: 10px; }
+.modal-field-label { font-size: 11px; font-weight: 600; color: var(–text-sub); margin-bottom: 4px; letter-spacing: .03em; }
 
-.modal-field-label {
-font-size: 11px;
-font-weight: 600;
-color: var(--text-sub);
-margin-bottom: 4px;
-letter-spacing: 0.03em;
-}
+/* –– セット管理モーダル –– */
+.modal-sets-inner { max-height: 85vh; display: flex; flex-direction: column; }
+.sets-scroll { overflow-y: auto; flex: 1; min-height: 0; margin: 0 -20px; padding: 0 20px; }
+.set-row { border-bottom: 1px solid var(–border-light); }
+.set-row:last-child { border-bottom: none; }
+.set-row-display { display: flex; align-items: center; gap: 6px; padding: 9px 0; }
+.set-row-edit { display: none; align-items: center; gap: 5px; padding: 7px 0; }
+.set-row-name { flex: 1; display: flex; align-items: center; gap: 7px; background: none; border: none; padding: 0; cursor: pointer; font-family: var(–font); font-size: 14px; font-weight: 500; color: var(–text); text-align: left; min-width: 0; }
+.set-row-name.current { color: var(–accent); font-weight: 700; }
+.set-check-icon { flex-shrink: 0; width: 16px; }
+.set-name-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+.set-count { font-size: 11px; color: var(–text-xs); flex-shrink: 0; }
+.set-row-actions { display: flex; gap: 4px; flex-shrink: 0; }
+.set-btn-icon { width: 30px; height: 30px; border: 1.5px solid var(–border); background: #fff; color: var(–text-sub); border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; flex-shrink: 0; }
+.set-btn-icon:active { opacity: .65; }
+.set-btn-icon.danger { border-color: #FCA5A5; color: var(–danger); background: #FFF5F5; }
+.set-btn-icon.accent { border-color: var(–accent); color: var(–accent); background: var(–accent-light); }
+.set-name-input { flex: 1; border: 1.5px solid var(–accent); border-radius: var(–radius-btn); padding: 6px 10px; font-family: var(–font); font-size: 14px; color: var(–text); background: #fff; outline: none; min-width: 0; }
+.btn-new-set { width: 100%; background: none; border: 1.5px dashed var(–border); border-radius: 10px; padding: 11px; font-family: var(–font); font-size: 13px; font-weight: 600; color: var(–text-sub); cursor: pointer; margin-top: 10px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.btn-new-set:active { opacity: .65; }
 
-.modal-input {
-width: 100%;
-border: 1.5px solid var(--border);
-border-radius: var(--radius-btn);
-padding: 10px 11px;
-font-family: var(--font);
-font-size: 16px;
-color: var(--text);
-background: var(--bg);
-outline: none;
--webkit-appearance: none;
-transition: border-color .15s;
-}
-.modal-input:focus { border-color: var(--accent); }
+/* –– チェックリスト –– */
+.check-all-row { display: flex; align-items: center; padding: 7px 2px; border-bottom: 1px solid var(–border-light); margin-bottom: 4px; }
+.check-all-row label { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(–text-sub); cursor: pointer; }
+.check-list { max-height: 190px; overflow-y: auto; margin-bottom: 14px; }
+.check-item { display: flex; align-items: center; gap: 10px; padding: 9px 2px; border-bottom: 1px solid var(–border-light); cursor: pointer; font-size: 13px; font-weight: 500; color: var(–text); }
+.check-item:last-child { border-bottom: none; }
+.check-item input[type=checkbox], .check-item input[type=radio] { width: 16px; height: 16px; accent-color: var(–accent); flex-shrink: 0; cursor: pointer; }
+.check-item-sub { margin-left: auto; font-size: 11px; color: var(–text-xs); flex-shrink: 0; }
+.conflict-badge { font-size: 10px; background: var(–warn-bg); color: var(–warn-text); padding: 1px 6px; border-radius: 4px; margin-left: 4px; font-weight: 600; flex-shrink: 0; }
+.conflict-names { font-size: 12px; color: var(–text); background: var(–bg); border-radius: 8px; padding: 8px 12px; margin-bottom: 14px; line-height: 1.7; }
 
-/* 編集モーダル：写真エリア */
+/* –– 編集写真 –– */
 .edit-photo-section { margin-bottom: 18px; }
 .edit-photo-section .modal-field-label { margin-bottom: 8px; }
-.edit-photo-preview {
-display: flex;
-align-items: center;
-gap: 10px;
-margin-bottom: 8px;
-}
-.edit-thumb-img {
-width: 56px;
-height: 56px;
-border-radius: 8px;
-object-fit: cover;
-border: 1px solid var(--border-light);
-flex-shrink: 0;
-}
-.photo-btn-row {
-display: flex;
-gap: 6px;
-flex-wrap: wrap;
-}
-.btn-photo-action {
-display: flex;
-align-items: center;
-gap: 5px;
-border: 1.5px solid var(--border);
-background: #fff;
-color: var(--text-sub);
-border-radius: 8px;
-padding: 7px 11px;
-font-family: var(--font);
-font-size: 12px;
-font-weight: 500;
-cursor: pointer;
-white-space: nowrap;
-}
+.edit-photo-preview { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.edit-thumb-img { width: 56px; height: 56px; border-radius: 8px; object-fit: cover; border: 1px solid var(–border-light); flex-shrink: 0; }
+.photo-btn-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.btn-photo-action { display: flex; align-items: center; gap: 5px; border: 1.5px solid var(–border); background: #fff; color: var(–text-sub); border-radius: 8px; padding: 7px 11px; font-family: var(–font); font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap; }
 .btn-photo-action:active { opacity: .65; }
-.btn-photo-action.danger {
-border-color: #FCA5A5;
-color: var(--danger);
-background: #FFF5F5;
-}
+.btn-photo-action.danger { border-color: #FCA5A5; color: var(–danger); background: #FFF5F5; }
 
-/* 写真拡大モーダル */
-#modal-photo .modal {
-padding: 0;
-overflow: hidden;
-background: #000;
-max-width: 300px;
-}
+/* –– 写真拡大 –– */
+#modal-photo .modal { padding: 0; overflow: hidden; background: #000; max-width: 300px; }
 #modal-photo img { width: 100%; display: block; }
-#modal-photo .modal-close-bar {
-background: #000;
-padding: 12px;
-text-align: center;
-}
-#modal-photo .btn-close-photo {
-background: rgba(255,255,255,0.15);
-border: none;
-color: #fff;
-font-family: var(--font);
-font-size: 13px;
-font-weight: 600;
-padding: 8px 28px;
-border-radius: 20px;
-cursor: pointer;
-}
+#modal-photo .modal-close-bar { background: #000; padding: 12px; text-align: center; }
+#modal-photo .btn-close-photo { background: rgba(255,255,255,0.15); border: none; color: #fff; font-family: var(–font); font-size: 13px; font-weight: 600; padding: 8px 28px; border-radius: 20px; cursor: pointer; }
 
-.toast {
-position: fixed;
-bottom: 30px;
-left: 50%;
-transform: translateX(-50%) translateY(64px);
-background: rgba(15,20,17,0.88);
-color: #fff;
-padding: 9px 20px;
-border-radius: 20px;
-font-size: 13px;
-z-index: 200;
-transition: transform 0.26s cubic-bezier(.34,1.56,.64,1), opacity 0.22s;
-opacity: 0;
-white-space: nowrap;
-pointer-events: none;
-letter-spacing: 0.02em;
-}
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(64px); background: rgba(15,20,17,0.88); color: #fff; padding: 9px 20px; border-radius: 20px; font-size: 13px; z-index: 200; transition: transform .26s cubic-bezier(.34,1.56,.64,1), opacity .22s; opacity: 0; white-space: nowrap; pointer-events: none; letter-spacing: .02em; }
 .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-#file-import       { display: none; }
-#camera-input      { display: none; }
-#camera-edit-shoot { display: none; }
-#camera-edit-lib   { display: none; }
+#file-import{display:none} #camera-input{display:none} #camera-edit-shoot{display:none} #camera-edit-lib{display:none}
 </style>
 
 </head>
 <body>
 
 <div class="header">
-  <div class="logo">売上<em>くん</em></div>
+  <button class="btn-set-switch" onclick="openSetsModal()">
+    <span class="title-set-name" id="title-set-name">—</span>
+    <span class="title-chevron">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </span>
+  </button>
   <button class="btn-ghost" onclick="confirmReset()">リセット</button>
 </div>
 
 <div class="content">
-
   <div class="card">
     <div class="card-body">
       <div class="input-row">
         <span class="input-label">質量</span>
         <input type="number" id="inp-mass" class="input-field" placeholder="0" inputmode="decimal" min="0" step="any">
         <span class="input-unit">g</span>
-        <button class="btn-camera" id="btn-camera" onclick="openCamera()" title="写真を撮る">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-            <circle cx="12" cy="13" r="4"/>
-          </svg>
+        <button class="btn-camera" id="btn-camera" onclick="openCamera()">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
         </button>
       </div>
       <div class="input-row">
@@ -636,46 +264,74 @@ letter-spacing: 0.02em;
   <div class="card">
     <div class="hist-header">
       <button class="btn-tool" onclick="copyToClipboard()" title="コピー">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="9" y="9" width="13" height="13" rx="2"/>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-        </svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
       </button>
-      <button class="btn-tool" onclick="exportJSON()" title="保存">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="7 10 12 15 17 10"/>
-          <line x1="12" y1="15" x2="12" y2="3"/>
-        </svg>
+      <button class="btn-tool" onclick="openExportModal()" title="保存">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       </button>
       <button class="btn-tool" onclick="document.getElementById('file-import').click()" title="復元">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="17 8 12 3 7 8"/>
-          <line x1="12" y1="3" x2="12" y2="15"/>
-        </svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       </button>
-      <input type="file" id="file-import" accept=".json" onchange="importJSON(event)">
+      <input type="file" id="file-import" accept=".json" onchange="handleImportFile(event)">
     </div>
-    <div class="hist-body">
-      <div id="history-list">
-        <div class="history-empty">まだ記録がありません</div>
-      </div>
-    </div>
+    <div class="hist-body"><div id="history-list"><div class="history-empty">まだ記録がありません</div></div></div>
   </div>
-
 </div>
 
 <input type="file" id="camera-input"      accept="image/*" capture="environment" onchange="handleCamera(event)">
 <input type="file" id="camera-edit-shoot" accept="image/*" capture="environment" onchange="handleEditPhoto(event)">
 <input type="file" id="camera-edit-lib"   accept="image/*"                       onchange="handleEditPhoto(event)">
 
-<!-- Modal: リセット確認 -->
+<!-- セット切り替え -->
+
+<div class="modal-overlay" id="modal-sets">
+  <div class="modal">
+    <div class="modal-sets-inner">
+      <div class="modal-title">セット切り替え</div>
+      <div class="sets-scroll" id="sets-list"></div>
+      <button class="btn-new-set" onclick="openNewSetModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        新規セットを作成
+      </button>
+      <div class="modal-actions"><button class="btn-cancel" onclick="closeModal('modal-sets')">閉じる</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- 新規セット作成 -->
+
+<div class="modal-overlay" id="modal-new-set">
+  <div class="modal">
+    <div class="modal-title">新規セットを作成</div>
+    <div class="modal-sub">セット名を入力してください</div>
+    <input type="text" id="new-set-name" class="modal-input" placeholder="例：６月石フリマ" style="margin-bottom:18px;"
+           onkeydown="if(event.key==='Enter'){event.preventDefault();doCreateSet();}">
+    <div class="modal-actions">
+      <button class="btn-cancel"     onclick="closeModal('modal-new-set')">キャンセル</button>
+      <button class="btn-primary-ok" onclick="doCreateSet()">作成して切り替え</button>
+    </div>
+  </div>
+</div>
+
+<!-- セット削除確認 -->
+
+<div class="modal-overlay" id="modal-delete-set">
+  <div class="modal">
+    <div class="modal-title">セットを削除</div>
+    <div class="modal-body">「<span id="delete-set-name-label"></span>」を削除します。<br>この操作は元に戻せません。</div>
+    <div class="modal-actions">
+      <button class="btn-cancel"    onclick="closeModal('modal-delete-set')">キャンセル</button>
+      <button class="btn-danger-ok" onclick="doDeleteSet()">削除</button>
+    </div>
+  </div>
+</div>
+
+<!-- リセット確認 -->
 
 <div class="modal-overlay" id="modal-reset">
   <div class="modal">
     <div class="modal-title">リセット確認</div>
-    <div class="modal-body">全データと通し番号をリセットします。<br>この操作は元に戻せません。</div>
+    <div class="modal-body">「<span id="reset-set-name-label"></span>」の全データをリセットします。<br>この操作は元に戻せません。</div>
     <div class="modal-actions">
       <button class="btn-cancel"    onclick="closeModal('modal-reset')">キャンセル</button>
       <button class="btn-danger-ok" onclick="doReset()">リセット</button>
@@ -683,384 +339,451 @@ letter-spacing: 0.02em;
   </div>
 </div>
 
-<!-- Modal: 削除確認 -->
+<!-- 記録削除確認 -->
 
-<div class="modal-overlay" id="modal-delete">
+<div class="modal-overlay" id="modal-delete-rec">
   <div class="modal">
     <div class="modal-title">削除確認</div>
     <div class="modal-body">この記録を削除しますか？<br>この操作は元に戻せません。</div>
     <div class="modal-actions">
-      <button class="btn-cancel"    onclick="closeModal('modal-delete')">キャンセル</button>
-      <button class="btn-danger-ok" onclick="doDelete()">削除</button>
+      <button class="btn-cancel"    onclick="closeModal('modal-delete-rec')">キャンセル</button>
+      <button class="btn-danger-ok" onclick="doDeleteRecord()">削除</button>
     </div>
   </div>
 </div>
 
-<!-- Modal: 編集 -->
+<!-- 記録編集 -->
 
 <div class="modal-overlay" id="modal-edit">
   <div class="modal">
     <div class="modal-title">記録を編集</div>
-    <div class="modal-field">
-      <div class="modal-field-label">質量（g）</div>
-      <input type="number" id="edit-mass" class="modal-input" inputmode="decimal" min="0" step="any">
-    </div>
-    <div class="modal-field">
-      <div class="modal-field-label">価格（円）</div>
-      <input type="number" id="edit-price" class="modal-input" inputmode="decimal" min="0" step="1">
-    </div>
-    <div class="modal-field" style="margin-bottom:14px;">
-      <div class="modal-field-label">その他</div>
-      <input type="text" id="edit-note" class="modal-input">
-    </div>
+    <div class="modal-field"><div class="modal-field-label">質量（g）</div><input type="number" id="edit-mass" class="modal-input" inputmode="decimal" min="0" step="any"></div>
+    <div class="modal-field"><div class="modal-field-label">価格（円）</div><input type="number" id="edit-price" class="modal-input" inputmode="decimal" min="0" step="1"></div>
+    <div class="modal-field" style="margin-bottom:14px;"><div class="modal-field-label">その他</div><input type="text" id="edit-note" class="modal-input"></div>
     <div class="edit-photo-section">
       <div class="modal-field-label">写真</div>
-      <div class="edit-photo-preview" id="edit-preview-row" style="display:none">
-        <img class="edit-thumb-img" id="edit-thumb-preview" src="" alt="">
-      </div>
+      <div class="edit-photo-preview" id="edit-preview-row" style="display:none"><img class="edit-thumb-img" id="edit-thumb-preview" src="" alt=""></div>
       <div class="photo-btn-row" id="edit-photo-btns"></div>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel"     onclick="closeModal('modal-edit')">キャンセル</button>
-      <button class="btn-primary-ok" onclick="doEdit()">保存</button>
+      <button class="btn-primary-ok" onclick="doEditRecord()">保存</button>
     </div>
   </div>
 </div>
 
-<!-- Modal: 復元確認 -->
+<!-- バックアップ保存 -->
+
+<div class="modal-overlay" id="modal-export">
+  <div class="modal">
+    <div class="modal-title">バックアップを保存</div>
+    <div class="modal-sub">保存するセットを選択してください</div>
+    <div class="check-all-row"><label><input type="checkbox" id="export-check-all" onchange="toggleCheckAll('export-check',this.checked)"> すべて選択</label></div>
+    <div class="check-list" id="export-sets-list"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel"     onclick="closeModal('modal-export')">キャンセル</button>
+      <button class="btn-primary-ok" onclick="doExport()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- データ復元 -->
 
 <div class="modal-overlay" id="modal-import">
   <div class="modal">
-    <div class="modal-title">データを復元</div>
-    <div class="modal-body" id="import-msg"></div>
+    <div class="modal-title" id="import-modal-title">データを復元</div>
+    <div id="import-step-1">
+      <div class="modal-sub" id="import-filename-label"></div>
+      <div class="check-all-row"><label><input type="checkbox" id="import-check-all" onchange="toggleCheckAll('import-check',this.checked)"> すべて選択</label></div>
+      <div class="check-list" id="import-sets-list"></div>
+    </div>
+    <div id="import-step-2" style="display:none">
+      <div class="modal-sub">以下のセットと同名のセットが既に存在します：</div>
+      <div class="conflict-names" id="import-conflict-names"></div>
+      <div class="check-list" style="margin-bottom:14px;">
+        <label class="check-item"><input type="radio" name="conflict-mode" value="overwrite"> 既存セットを上書きする</label>
+        <label class="check-item"><input type="radio" name="conflict-mode" value="add" checked> 別セットとして追加する</label>
+      </div>
+    </div>
     <div class="modal-actions">
       <button class="btn-cancel"     onclick="closeModal('modal-import')">キャンセル</button>
-      <button class="btn-primary-ok" onclick="doImport()">復元する</button>
+      <button class="btn-primary-ok" id="import-btn-ok" onclick="handleImportNext()">次へ</button>
     </div>
   </div>
 </div>
 
-<!-- Modal: 写真拡大 -->
+<!-- 写真拡大 -->
 
 <div class="modal-overlay" id="modal-photo">
-  <div class="modal">
-    <img id="photo-full" src="" alt="">
-    <div class="modal-close-bar">
-      <button class="btn-close-photo" onclick="closeModal('modal-photo')">閉じる</button>
-    </div>
+  <div class="modal"><img id="photo-full" src="" alt="">
+    <div class="modal-close-bar"><button class="btn-close-photo" onclick="closeModal('modal-photo')">閉じる</button></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-let records        = JSON.parse(localStorage.getItem('uriage_records') || '[]');
-let counter        = parseInt(localStorage.getItem('uriage_counter') || '0', 10);
-let deleteTargetId = null;
-let editTargetId   = null;
-let importBuffer   = null;
-let currentPhoto   = null;
-let editPhoto      = null;
+/* ===== データ ===== */
+let appData = { sets:[], currentSetId:null };
+let currentPhoto=null, editPhoto=null;
+let deleteTargetRecId=null, editTargetRecId=null, deleteTargetSetId=null;
+let importBuffer=null, importSelectedIds=[], importStep=1;
+const STORAGE_KEY = 'uriage_v2';
 
-function toHalf(s) {
-  return String(s).replace(/[０-９．]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0));
-}
-function fmtDT(iso) {
-  const d = new Date(iso), p = n => String(n).padStart(2,'0');
-  return `${d.getFullYear()}/${p(d.getMonth()+1)}/${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
-}
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-function save() {
-  localStorage.setItem('uriage_records', JSON.stringify(records));
-  localStorage.setItem('uriage_counter', String(counter));
-}
-let toastTimer;
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
-}
+function genId(){ return 'set_'+Date.now()+'_'+Math.random().toString(36).slice(2,6); }
 
-/* ---- 画像リサイズ ---- */
-function resizeToSquare(file, callback) {
-  const reader = new FileReader();
-  reader.onload = e => {
-    const img = new Image();
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      canvas.width = canvas.height = 250;
-      const ctx = canvas.getContext('2d');
-      const size = Math.min(img.naturalWidth, img.naturalHeight);
-      const sx = (img.naturalWidth  - size) / 2;
-      const sy = (img.naturalHeight - size) / 2;
-      ctx.drawImage(img, sx, sy, size, size, 0, 0, 250, 250);
-      callback(canvas.toDataURL('image/jpeg', 0.80));
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-/* ---- 新規記録カメラ ---- */
-function openCamera() { document.getElementById('camera-input').click(); }
-function handleCamera(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  event.target.value = '';
-  resizeToSquare(file, base64 => {
-    currentPhoto = base64;
-    document.getElementById('btn-camera').classList.add('has-photo');
-    toast('写真を設定しました');
-  });
-}
-function clearCurrentPhoto() {
-  currentPhoto = null;
-  document.getElementById('btn-camera').classList.remove('has-photo');
-}
-
-/* ---- 入力イベント ---- */
-['inp-mass','inp-price'].forEach(id => {
-  document.getElementById(id).addEventListener('input', function() {
-    const h = toHalf(this.value);
-    if (h !== this.value) this.value = h;
-  });
-});
-document.getElementById('inp-mass').addEventListener('keydown', e => {
-  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('inp-price').focus(); }
-});
-document.getElementById('inp-price').addEventListener('keydown', e => {
-  if (e.key === 'Enter') { e.preventDefault(); document.getElementById('inp-note').focus(); }
-});
-document.getElementById('inp-note').addEventListener('keydown', e => {
-  if (e.key === 'Enter') { e.preventDefault(); addRecord(); }
-});
-
-/* ---- 記録追加 ---- */
-function addRecord() {
-  const massStr  = toHalf(document.getElementById('inp-mass').value.trim());
-  const priceStr = toHalf(document.getElementById('inp-price').value.trim());
-  const note     = document.getElementById('inp-note').value.trim();
-  if (!massStr)  { alert('質量を入力してください');  document.getElementById('inp-mass').focus();  return; }
-  if (!priceStr) { alert('価格を入力してください');  document.getElementById('inp-price').focus(); return; }
-  const mass = parseFloat(massStr), price = parseFloat(priceStr);
-  if (isNaN(mass)  || mass  < 0) { alert('質量に正しい数値（0以上）を入力してください'); return; }
-  if (isNaN(price) || price < 0) { alert('価格に正しい数値（0以上）を入力してください'); return; }
-  counter++;
-  records.push({ id: counter, datetime: new Date().toISOString(), mass, price, note, photo: currentPhoto || null });
-  save(); render();
-  ['inp-mass','inp-price','inp-note'].forEach(id => document.getElementById(id).value = '');
-  clearCurrentPhoto();
-  document.getElementById('inp-mass').focus();
-  toast('記録しました');
-}
-
-/* ---- レンダリング ---- */
-function render() {
-  const tp = records.reduce((s,r) => s + r.price, 0);
-  const tm = records.reduce((s,r) => s + r.mass,  0);
-  document.getElementById('total-price').innerHTML = `${tp.toLocaleString()}<small>円</small>`;
-  document.getElementById('total-mass').innerHTML  = `${Number(tm.toFixed(2)).toLocaleString()}<small>g</small>`;
-
-  // 質量単価
-  const upEl = document.getElementById('total-uprice');
-  if (tm > 0) {
-    const up = Math.round((tp / tm) * 10) / 10;
-    upEl.innerHTML = `${up.toLocaleString()}<small style="font-size:10px;margin-left:1px;">円/g</small>`;
-  } else {
-    upEl.innerHTML = `—<small style="font-size:10px;margin-left:1px;">円/g</small>`;
-  }
-
-  const list = document.getElementById('history-list');
-  if (!records.length) {
-    list.innerHTML = '<div class="history-empty">まだ記録がありません</div>';
+function loadData(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw){
+    appData = JSON.parse(raw);
+    if(!appData.sets.find(s=>s.id===appData.currentSetId))
+      appData.currentSetId = appData.sets.length ? appData.sets[0].id : null;
     return;
   }
+  const oldRec = JSON.parse(localStorage.getItem('uriage_records')||'[]');
+  const oldCnt = parseInt(localStorage.getItem('uriage_counter')||'0',10);
+  const first  = { id:genId(), name:'デフォルト', records:oldRec, counter:oldCnt, createdAt:new Date().toISOString() };
+  appData = { sets:[first], currentSetId:first.id };
+  saveData();
+}
+function saveData(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
+function currentSet(){ return appData.sets.find(s=>s.id===appData.currentSetId)||null; }
 
-  list.innerHTML = [...records].reverse().map(r => {
-    const noteHtml  = r.note ? `<div class="h-note">${escHtml(r.note)}</div>` : '';
-    const thumbHtml = r.photo
-      ? `<img class="h-thumb" src="${r.photo}" alt="写真" onclick="viewPhoto(${r.id})">`
-      : '';
-    return `
-    <div class="h-item${r.photo ? ' has-photo' : ''}">
-      <div class="h-r1">
-        <span class="h-id">No.${r.id}</span>
-        <span class="h-dt">${fmtDT(r.datetime)}</span>
-      </div>
-      <div class="h-r2">
-        <div class="h-vals">
-          <span class="h-num">${Number(r.mass.toFixed(2)).toLocaleString()}<small>g</small></span>
-          <span class="h-num">${r.price.toLocaleString()}<small>円</small></span>
+/* ===== ユーティリティ ===== */
+function toHalf(s){ return String(s).replace(/[０-９．]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0)); }
+function fmtDT(iso){ const d=new Date(iso),p=n=>String(n).padStart(2,'0'); return `${d.getFullYear()}/${p(d.getMonth()+1)}/${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`; }
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+let toastTimer;
+function toast(msg){ const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),2200); }
+
+/* ===== タイトル（フォントサイズ自動縮小） ===== */
+const TITLE_MAX = 19; // px
+const TITLE_MIN = 11; // px
+
+function updateSubtitle(){
+  const cs = currentSet();
+  const name = cs ? cs.name : '—';
+  document.title = name + ' - 売上くん';
+  const el = document.getElementById('title-set-name');
+  el.textContent = name;
+  el.style.fontSize = TITLE_MAX + 'px';
+  // 親（btn-set-switch）の利用可能幅に収まるまで縮小
+  const parent = el.closest('.btn-set-switch');
+  let size = TITLE_MAX;
+  while(el.scrollWidth > parent.clientWidth - 20 && size > TITLE_MIN){
+    size -= 0.5;
+    el.style.fontSize = size + 'px';
+  }
+}
+
+/* ===== モーダル ===== */
+function openModal(id){ document.getElementById(id).classList.add('active'); }
+function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+document.querySelectorAll('.modal-overlay').forEach(el=>{
+  el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('active'); });
+});
+
+/* ===== SVGアイコン ===== */
+const IC_CHECK = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+const IC_PEN   = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
+const IC_TRASH = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>`;
+const IC_OK    = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+const IC_X     = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+const IC_CAM   = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`;
+const IC_LIB   = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
+
+/* ===== セット管理 ===== */
+function openSetsModal(){ renderSetsModal(); openModal('modal-sets'); }
+
+function renderSetsModal(){
+  document.getElementById('sets-list').innerHTML = appData.sets.map(s=>{
+    const cur = s.id===appData.currentSetId;
+    return `<div class="set-row" id="set-row-${s.id}">
+      <div class="set-row-display">
+        <button class="set-row-name${cur?' current':''}" onclick="switchSet('${s.id}')">
+          <span class="set-check-icon">${cur?IC_CHECK:''}</span>
+          <span class="set-name-text">${escHtml(s.name)}</span>
+          <span class="set-count">${s.records.length}件</span>
+        </button>
+        <div class="set-row-actions">
+          <button class="set-btn-icon" onclick="startRename('${s.id}')">${IC_PEN}</button>
+          <button class="set-btn-icon danger" onclick="confirmDeleteSet('${s.id}')">${IC_TRASH}</button>
         </div>
-        <div class="h-btns">
-          <button class="btn-edit" onclick="confirmEdit(${r.id})">編集</button>
-          <button class="btn-del"  onclick="confirmDelete(${r.id})">削除</button>
-        </div>
       </div>
-      ${noteHtml}
-      ${thumbHtml}
+      <div class="set-row-edit" id="set-edit-${s.id}">
+        <input class="set-name-input" id="set-inp-${s.id}" type="text" value="${escHtml(s.name)}"
+               onkeydown="if(event.key==='Enter')saveRename('${s.id}');if(event.key==='Escape')renderSetsModal();">
+        <button class="set-btn-icon accent" onclick="saveRename('${s.id}')">${IC_OK}</button>
+        <button class="set-btn-icon"        onclick="renderSetsModal()">${IC_X}</button>
+      </div>
     </div>`;
   }).join('');
 }
 
-/* ---- 写真拡大 ---- */
-function viewPhoto(id) {
-  const r = records.find(r => r.id === id);
-  if (!r || !r.photo) return;
-  document.getElementById('photo-full').src = r.photo;
-  openModal('modal-photo');
+function switchSet(id){
+  appData.currentSetId=id; saveData(); updateSubtitle(); render();
+  closeModal('modal-sets');
 }
 
-/* ---- モーダル ---- */
-function openModal(id)  { document.getElementById(id).classList.add('active'); }
-function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-document.querySelectorAll('.modal-overlay').forEach(el => {
-  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('active'); });
+function openNewSetModal(){
+  document.getElementById('new-set-name').value='';
+  openModal('modal-new-set');
+  setTimeout(()=>document.getElementById('new-set-name').focus(),80);
+}
+function doCreateSet(){
+  const name = document.getElementById('new-set-name').value.trim()||'新しいセット';
+  const ns = { id:genId(), name, records:[], counter:0, createdAt:new Date().toISOString() };
+  appData.sets.push(ns); appData.currentSetId=ns.id;
+  saveData(); updateSubtitle(); render();
+  closeModal('modal-new-set'); closeModal('modal-sets');
+  toast(`「${name}」を作成しました`);
+}
+
+function startRename(id){
+  const row=document.getElementById('set-row-'+id);
+  row.querySelector('.set-row-display').style.display='none';
+  row.querySelector('.set-row-edit').style.display='flex';
+  document.getElementById('set-inp-'+id).focus();
+  document.getElementById('set-inp-'+id).select();
+}
+function saveRename(id){
+  const name=document.getElementById('set-inp-'+id).value.trim();
+  if(!name){renderSetsModal();return;}
+  const s=appData.sets.find(s=>s.id===id);
+  if(s){s.name=name; saveData(); updateSubtitle(); renderSetsModal(); toast('セット名を変更しました');}
+}
+
+function confirmDeleteSet(id){
+  deleteTargetSetId=id;
+  const s=appData.sets.find(s=>s.id===id);
+  document.getElementById('delete-set-name-label').textContent=s?s.name:'';
+  openModal('modal-delete-set');
+}
+function doDeleteSet(){
+  appData.sets=appData.sets.filter(s=>s.id!==deleteTargetSetId);
+  if(appData.currentSetId===deleteTargetSetId){
+    if(appData.sets.length){ appData.currentSetId=appData.sets[0].id; }
+    else { const ns={id:genId(),name:'デフォルト',records:[],counter:0,createdAt:new Date().toISOString()}; appData.sets.push(ns); appData.currentSetId=ns.id; }
+  }
+  saveData(); updateSubtitle(); render(); renderSetsModal();
+  closeModal('modal-delete-set'); toast('セットを削除しました');
+}
+
+/* ===== リセット ===== */
+function confirmReset(){
+  const cs=currentSet();
+  document.getElementById('reset-set-name-label').textContent=cs?cs.name:'';
+  openModal('modal-reset');
+}
+function doReset(){
+  const cs=currentSet();
+  if(cs){cs.records=[];cs.counter=0;saveData();render();}
+  closeModal('modal-reset'); toast('リセットしました');
+}
+
+/* ===== カメラ ===== */
+function resizeToSquare(file,cb){
+  const reader=new FileReader();
+  reader.onload=e=>{ const img=new Image(); img.onload=()=>{
+    const c=document.createElement('canvas'); c.width=c.height=250;
+    const ctx=c.getContext('2d'), sz=Math.min(img.naturalWidth,img.naturalHeight);
+    ctx.drawImage(img,(img.naturalWidth-sz)/2,(img.naturalHeight-sz)/2,sz,sz,0,0,250,250);
+    cb(c.toDataURL('image/jpeg',0.80));
+  }; img.src=e.target.result; }; reader.readAsDataURL(file);
+}
+function openCamera(){ document.getElementById('camera-input').click(); }
+function handleCamera(e){ const f=e.target.files[0]; if(!f)return; e.target.value=''; resizeToSquare(f,b=>{currentPhoto=b;document.getElementById('btn-camera').classList.add('has-photo');toast('写真を設定しました');}); }
+function clearCurrentPhoto(){ currentPhoto=null; document.getElementById('btn-camera').classList.remove('has-photo'); }
+
+/* ===== 入力 ===== */
+['inp-mass','inp-price'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',function(){ const h=toHalf(this.value); if(h!==this.value)this.value=h; });
 });
+document.getElementById('inp-mass').addEventListener('keydown',  e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('inp-price').focus();}});
+document.getElementById('inp-price').addEventListener('keydown', e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('inp-note').focus();}});
+document.getElementById('inp-note').addEventListener('keydown',  e=>{if(e.key==='Enter'){e.preventDefault();addRecord();}});
 
-/* ---- リセット ---- */
-function confirmReset() { openModal('modal-reset'); }
-function doReset() {
-  records = []; counter = 0;
-  save(); render();
-  closeModal('modal-reset');
-  toast('リセットしました');
+/* ===== 記録 CRUD ===== */
+function addRecord(){
+  const cs=currentSet(); if(!cs)return;
+  const ms=toHalf(document.getElementById('inp-mass').value.trim());
+  const ps=toHalf(document.getElementById('inp-price').value.trim());
+  const nt=document.getElementById('inp-note').value.trim();
+  if(!ms){alert('質量を入力してください');document.getElementById('inp-mass').focus();return;}
+  if(!ps){alert('価格を入力してください');document.getElementById('inp-price').focus();return;}
+  const mass=parseFloat(ms),price=parseFloat(ps);
+  if(isNaN(mass)||mass<0){alert('質量に正しい数値（0以上）を入力してください');return;}
+  if(isNaN(price)||price<0){alert('価格に正しい数値（0以上）を入力してください');return;}
+  cs.counter++;
+  cs.records.push({id:cs.counter,datetime:new Date().toISOString(),mass,price,note:nt,photo:currentPhoto||null});
+  saveData();render();
+  ['inp-mass','inp-price','inp-note'].forEach(id=>document.getElementById(id).value='');
+  clearCurrentPhoto();document.getElementById('inp-mass').focus();toast('記録しました');
+}
+function confirmDeleteRecord(id){ deleteTargetRecId=id; openModal('modal-delete-rec'); }
+function doDeleteRecord(){
+  const cs=currentSet(); if(!cs)return;
+  cs.records=cs.records.filter(r=>r.id!==deleteTargetRecId);
+  saveData();render();closeModal('modal-delete-rec');toast('削除しました');
+}
+function confirmEditRecord(id){
+  editTargetRecId=id;
+  const cs=currentSet(); if(!cs)return;
+  const r=cs.records.find(r=>r.id===id);
+  document.getElementById('edit-mass').value=r.mass;
+  document.getElementById('edit-price').value=r.price;
+  document.getElementById('edit-note').value=r.note;
+  editPhoto=r.photo||null; updateEditPhotoUI(); openModal('modal-edit');
+}
+function doEditRecord(){
+  const cs=currentSet(); if(!cs)return;
+  const ms=toHalf(document.getElementById('edit-mass').value.trim());
+  const ps=toHalf(document.getElementById('edit-price').value.trim());
+  const nt=document.getElementById('edit-note').value.trim();
+  const mass=parseFloat(ms),price=parseFloat(ps);
+  if(isNaN(mass)||mass<0){alert('質量に正しい数値を入力してください');return;}
+  if(isNaN(price)||price<0){alert('価格に正しい数値を入力してください');return;}
+  const idx=cs.records.findIndex(r=>r.id===editTargetRecId);
+  cs.records[idx]={...cs.records[idx],mass,price,note:nt,photo:editPhoto};
+  saveData();render();closeModal('modal-edit');toast('更新しました');
 }
 
-/* ---- 削除 ---- */
-function confirmDelete(id) { deleteTargetId = id; openModal('modal-delete'); }
-function doDelete() {
-  records = records.filter(r => r.id !== deleteTargetId);
-  save(); render();
-  closeModal('modal-delete');
-  toast('削除しました');
-}
-
-/* ---- 編集 ---- */
-function confirmEdit(id) {
-  editTargetId = id;
-  const r = records.find(r => r.id === id);
-  document.getElementById('edit-mass').value  = r.mass;
-  document.getElementById('edit-price').value = r.price;
-  document.getElementById('edit-note').value  = r.note;
-  editPhoto = r.photo || null;
-  updateEditPhotoUI();
-  openModal('modal-edit');
-}
-
-function updateEditPhotoUI() {
-  const previewRow = document.getElementById('edit-preview-row');
-  const previewImg = document.getElementById('edit-thumb-preview');
-  const btnRow     = document.getElementById('edit-photo-btns');
-  const camIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`;
-  const libIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`;
-
-  if (editPhoto) {
-    previewRow.style.display = 'flex';
-    previewImg.src = editPhoto;
-    btnRow.innerHTML =
-      `<button class="btn-photo-action" onclick="triggerEditShoot()">${camIcon}撮り直す</button>` +
-      `<button class="btn-photo-action" onclick="triggerEditLib()">${libIcon}ライブラリ</button>` +
-      `<button class="btn-photo-action danger" onclick="clearEditPhoto()">削除</button>`;
+/* ===== 編集写真UI ===== */
+function updateEditPhotoUI(){
+  const pr=document.getElementById('edit-preview-row'),pi=document.getElementById('edit-thumb-preview'),br=document.getElementById('edit-photo-btns');
+  if(editPhoto){
+    pr.style.display='flex';pi.src=editPhoto;
+    br.innerHTML=`<button class="btn-photo-action" onclick="triggerEditShoot()">${IC_CAM}撮り直す</button><button class="btn-photo-action" onclick="triggerEditLib()">${IC_LIB}ライブラリ</button><button class="btn-photo-action danger" onclick="clearEditPhoto()">削除</button>`;
   } else {
-    previewRow.style.display = 'none';
-    previewImg.src = '';
-    btnRow.innerHTML =
-      `<button class="btn-photo-action" onclick="triggerEditShoot()">${camIcon}撮影する</button>` +
-      `<button class="btn-photo-action" onclick="triggerEditLib()">${libIcon}ライブラリから選ぶ</button>`;
+    pr.style.display='none';pi.src='';
+    br.innerHTML=`<button class="btn-photo-action" onclick="triggerEditShoot()">${IC_CAM}撮影する</button><button class="btn-photo-action" onclick="triggerEditLib()">${IC_LIB}ライブラリから選ぶ</button>`;
   }
 }
+function triggerEditShoot(){ document.getElementById('camera-edit-shoot').click(); }
+function triggerEditLib(){   document.getElementById('camera-edit-lib').click(); }
+function handleEditPhoto(e){ const f=e.target.files[0]; if(!f)return; e.target.value=''; resizeToSquare(f,b=>{editPhoto=b;updateEditPhotoUI();toast('写真を設定しました');}); }
+function clearEditPhoto(){ editPhoto=null; updateEditPhotoUI(); }
+function viewPhoto(id){ const cs=currentSet(); if(!cs)return; const r=cs.records.find(r=>r.id===id); if(!r||!r.photo)return; document.getElementById('photo-full').src=r.photo; openModal('modal-photo'); }
 
-function triggerEditShoot() { document.getElementById('camera-edit-shoot').click(); }
-function triggerEditLib()   { document.getElementById('camera-edit-lib').click();   }
-
-function handleEditPhoto(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  event.target.value = '';
-  resizeToSquare(file, base64 => {
-    editPhoto = base64;
-    updateEditPhotoUI();
-    toast('写真を設定しました');
-  });
+/* ===== レンダリング ===== */
+function render(){
+  const cs=currentSet(), records=cs?cs.records:[];
+  const tp=records.reduce((s,r)=>s+r.price,0), tm=records.reduce((s,r)=>s+r.mass,0);
+  document.getElementById('total-price').innerHTML=`${tp.toLocaleString()}<small>円</small>`;
+  document.getElementById('total-mass').innerHTML=`${Number(tm.toFixed(2)).toLocaleString()}<small>g</small>`;
+  const up=document.getElementById('total-uprice');
+  up.innerHTML=tm>0?`${(Math.round(tp/tm*10)/10).toLocaleString()}<small style="font-size:10px;margin-left:1px;">円/g</small>`:`—<small style="font-size:10px;margin-left:1px;">円/g</small>`;
+  const list=document.getElementById('history-list');
+  if(!records.length){list.innerHTML='<div class="history-empty">まだ記録がありません</div>';return;}
+  list.innerHTML=[...records].reverse().map(r=>{
+    const nh=r.note?`<div class="h-note">${escHtml(r.note)}</div>`:'';
+    const th=r.photo?`<img class="h-thumb" src="${r.photo}" alt="写真" onclick="viewPhoto(${r.id})">` :'';
+    return `<div class="h-item${r.photo?' has-photo':''}">
+      <div class="h-r1"><span class="h-id">No.${r.id}</span><span class="h-dt">${fmtDT(r.datetime)}</span></div>
+      <div class="h-r2"><div class="h-vals"><span class="h-num">${Number(r.mass.toFixed(2)).toLocaleString()}<small>g</small></span><span class="h-num">${r.price.toLocaleString()}<small>円</small></span></div><div class="h-btns"><button class="btn-edit" onclick="confirmEditRecord(${r.id})">編集</button><button class="btn-del" onclick="confirmDeleteRecord(${r.id})">削除</button></div></div>
+      ${nh}${th}</div>`;
+  }).join('');
 }
 
-function clearEditPhoto() {
-  editPhoto = null;
-  updateEditPhotoUI();
+/* ===== クリップボード ===== */
+function copyToClipboard(){
+  const cs=currentSet();
+  if(!cs||!cs.records.length){toast('データがありません');return;}
+  const h=['通し番号','日時','質量(g)','価格(円)','その他'].join('\t');
+  const rows=cs.records.map(r=>[r.id,fmtDT(r.datetime),r.mass,r.price,r.note].join('\t'));
+  navigator.clipboard.writeText([h,...rows].join('\n')).then(()=>toast('クリップボードにコピーしました')).catch(()=>toast('コピーに失敗しました'));
 }
 
-function doEdit() {
-  const massStr  = toHalf(document.getElementById('edit-mass').value.trim());
-  const priceStr = toHalf(document.getElementById('edit-price').value.trim());
-  const note     = document.getElementById('edit-note').value.trim();
-  const mass = parseFloat(massStr), price = parseFloat(priceStr);
-  if (isNaN(mass)  || mass  < 0) { alert('質量に正しい数値を入力してください'); return; }
-  if (isNaN(price) || price < 0) { alert('価格に正しい数値を入力してください'); return; }
-  const idx = records.findIndex(r => r.id === editTargetId);
-  records[idx] = { ...records[idx], mass, price, note, photo: editPhoto };
-  save(); render();
-  closeModal('modal-edit');
-  toast('更新しました');
+/* ===== チェック全選択 ===== */
+function toggleCheckAll(cls,checked){ document.querySelectorAll('.'+cls).forEach(cb=>cb.checked=checked); }
+
+/* ===== 保存 ===== */
+function openExportModal(){
+  if(!appData.sets.length){toast('セットがありません');return;}
+  document.getElementById('export-sets-list').innerHTML=appData.sets.map(s=>
+    `<label class="check-item"><input type="checkbox" class="export-check" value="${s.id}" checked><span>${escHtml(s.name)}</span><span class="check-item-sub">${s.records.length}件</span></label>`
+  ).join('');
+  document.getElementById('export-check-all').checked=true;
+  openModal('modal-export');
+}
+function doExport(){
+  const ids=[...document.querySelectorAll('.export-check:checked')].map(cb=>cb.value);
+  if(!ids.length){toast('セットを選択してください');return;}
+  const data={version:2,sets:appData.sets.filter(s=>ids.includes(s.id)),exportedAt:new Date().toISOString()};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  const d=new Date(),p=n=>String(n).padStart(2,'0');
+  a.href=url;a.download=`uriage_${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}.json`;
+  a.click();URL.revokeObjectURL(url);
+  closeModal('modal-export');toast('バックアップを保存しました');
 }
 
-/* ---- コピー ---- */
-function copyToClipboard() {
-  if (!records.length) { toast('データがありません'); return; }
-  const header = ['通し番号','日時','質量(g)','価格(円)','その他'].join('\t');
-  const rows   = records.map(r => [r.id, fmtDT(r.datetime), r.mass, r.price, r.note].join('\t'));
-  navigator.clipboard.writeText([header, ...rows].join('\n'))
-    .then(() => toast('クリップボードにコピーしました'))
-    .catch(() => toast('コピーに失敗しました'));
-}
-
-/* ---- JSON 保存・復元 ---- */
-function exportJSON() {
-  if (!records.length) { toast('データがありません'); return; }
-  const data = { version: 1, counter, records, exportedAt: new Date().toISOString() };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  const d    = new Date(), p = n => String(n).padStart(2,'0');
-  a.href     = url;
-  a.download = `uriage_${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-  toast('バックアップを保存しました');
-}
-
-function importJSON(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  event.target.value = '';
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      const data = JSON.parse(e.target.result);
-      if (!data.records || !Array.isArray(data.records)) throw new Error();
-      importBuffer = data;
-      document.getElementById('import-msg').textContent =
-        `${file.name}\n${data.records.length}件のデータを読み込みました。現在のデータを上書きして復元しますか？`;
-      openModal('modal-import');
-    } catch { toast('ファイルの読み込みに失敗しました'); }
+/* ===== 復元 ===== */
+function handleImportFile(e){
+  const file=e.target.files[0]; if(!file)return; e.target.value='';
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      if(data.version===2&&Array.isArray(data.sets)){importBuffer=data.sets;}
+      else if(Array.isArray(data.records)){importBuffer=[{id:genId(),name:file.name.replace(/\.json$/i,''),records:data.records,counter:data.counter||0,createdAt:new Date().toISOString()}];}
+      else throw new Error();
+      openImportModal(file.name);
+    }catch{toast('ファイルの読み込みに失敗しました');}
   };
   reader.readAsText(file);
 }
-
-function doImport() {
-  if (!importBuffer) return;
-  records = importBuffer.records;
-  counter = importBuffer.counter || records.reduce((m,r) => Math.max(m, r.id), 0);
-  save(); render();
-  closeModal('modal-import');
-  importBuffer = null;
-  toast(`${records.length}件のデータを復元しました`);
+function openImportModal(filename){
+  importStep=1;importSelectedIds=[];
+  document.getElementById('import-modal-title').textContent='データを復元';
+  document.getElementById('import-filename-label').textContent=filename;
+  document.getElementById('import-step-1').style.display='block';
+  document.getElementById('import-step-2').style.display='none';
+  document.getElementById('import-btn-ok').textContent='次へ';
+  const existNames=appData.sets.map(s=>s.name);
+  document.getElementById('import-sets-list').innerHTML=importBuffer.map(s=>{
+    const conflict=existNames.includes(s.name);
+    return `<label class="check-item"><input type="checkbox" class="import-check" value="${s.id}" checked><span>${escHtml(s.name)}${conflict?'<span class="conflict-badge">同名あり</span>':''}</span><span class="check-item-sub">${s.records.length}件</span></label>`;
+  }).join('');
+  document.getElementById('import-check-all').checked=true;
+  openModal('modal-import');
+}
+function handleImportNext(){
+  if(importStep===1){
+    importSelectedIds=[...document.querySelectorAll('.import-check:checked')].map(cb=>cb.value);
+    if(!importSelectedIds.length){toast('セットを選択してください');return;}
+    const sel=importBuffer.filter(s=>importSelectedIds.includes(s.id));
+    const conflicts=sel.filter(s=>appData.sets.some(e=>e.name===s.name));
+    if(conflicts.length){
+      importStep=2;
+      document.getElementById('import-modal-title').textContent='同名セットの処理';
+      document.getElementById('import-step-1').style.display='none';
+      document.getElementById('import-step-2').style.display='block';
+      document.getElementById('import-btn-ok').textContent='復元する';
+      document.getElementById('import-conflict-names').textContent=conflicts.map(s=>`「${s.name}」`).join('、');
+      document.querySelector('input[name="conflict-mode"][value="add"]').checked=true;
+    } else { execImport(sel,'add'); }
+  } else {
+    const mode=document.querySelector('input[name="conflict-mode"]:checked').value;
+    execImport(importBuffer.filter(s=>importSelectedIds.includes(s.id)),mode);
+  }
+}
+function execImport(sets,mode){
+  let count=0;
+  sets.forEach(s=>{
+    const existing=appData.sets.find(e=>e.name===s.name);
+    if(existing&&mode==='overwrite'){const idx=appData.sets.indexOf(existing);appData.sets[idx]={...s,id:existing.id};}
+    else{let name=s.name,n=2;while(appData.sets.some(e=>e.name===name))name=`${s.name} (${n++})`;appData.sets.push({...s,id:genId(),name});}
+    count++;
+  });
+  saveData();render();closeModal('modal-import');importBuffer=null;
+  toast(`${count}件のセットを復元しました`);
 }
 
+/* ===== 起動 ===== */
+loadData();
+// フォント読み込み後にタイトルを調整するため少し遅延
+document.fonts.ready.then(()=>{ updateSubtitle(); });
 render();
 document.getElementById('inp-mass').focus();
 </script>
