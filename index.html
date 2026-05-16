@@ -121,7 +121,15 @@ cursor: pointer;
 .s-uprice { margin-left: auto; font-size: 13px; font-weight: 600; color: rgba(42,157,143,.68); letter-spacing: .01em; flex-shrink: 0; line-height: 1; }
 
 /* -- 履歴 -- */
-.hist-header { display: flex; align-items: center; justify-content: flex-end; gap: 5px; padding: 9px 11px; border-bottom: 1px solid var(--border-light); }
+.hist-header { display: flex; align-items: center; justify-content: space-between; padding: 9px 11px; border-bottom: 1px solid var(--border-light); }
+.hist-header-left { display: flex; align-items: center; gap: 2px; }
+.hist-header-right { display: flex; align-items: center; gap: 5px; }
+
+.btn-sort { border: none; background: transparent; color: var(--text-sub); font-family: var(--font); font-size: 11px; font-weight: 600; padding: 5px 7px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 2px; transition: background .15s, color .15s; line-height: 1; height: 26px; }
+.btn-sort.active { background: var(--accent-light); color: var(--accent-dark); }
+.btn-sort:active { opacity: .75; }
+.sort-icon { display: inline-block; width: 9px; font-size: 9px; text-align: center; }
+
 .btn-tool { width: 34px; height: 34px; border: 1.5px solid var(--border); background: #fff; color: var(--text-sub); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; }
 .btn-tool:active { opacity: .65; }
 .hist-body { padding: 7px 9px; }
@@ -136,7 +144,7 @@ cursor: pointer;
 .h-vals { display: flex; align-items: baseline; gap: 10px; flex-shrink: 0; }
 .h-num { font-size: 16px; font-weight: 600; color: var(--text); line-height: 1; }
 .h-num small { font-size: 10px; font-weight: 400; color: var(--text-sub); margin-left: 1px; }
-.h-uprice { font-size: 10px; color: var(--text-xs); margin-left: 2px; } /* 追加: 履歴の100g単価スタイル */
+.h-uprice { font-size: 10px; color: var(--text-xs); margin-left: 2px; }
 .h-thumb { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 6px; object-fit: cover; border: 1px solid var(--border-light); cursor: pointer; display: block; }
 .h-thumb:active { opacity: .75; }
 .h-btns { display: flex; gap: 5px; flex-shrink: 0; }
@@ -264,16 +272,23 @@ cursor: pointer;
 
   <div class="card">
     <div class="hist-header">
-      <button class="btn-tool" onclick="copyToClipboard()" title="コピー">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      </button>
-      <button class="btn-tool" onclick="document.getElementById('file-import').click()" title="復元">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      </button>
-      <button class="btn-tool" onclick="openExportModal()" title="保存">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      </button>
-      <input type="file" id="file-import" accept=".json" onchange="handleImportFile(event)">
+      <div class="hist-header-left">
+        <button class="btn-sort" id="sort-btn-id" onclick="setSort('id')">No.<span class="sort-icon" id="sort-ic-id"></span></button>
+        <button class="btn-sort" id="sort-btn-mass" onclick="setSort('mass')">質量<span class="sort-icon" id="sort-ic-mass"></span></button>
+        <button class="btn-sort" id="sort-btn-price" onclick="setSort('price')">価格<span class="sort-icon" id="sort-ic-price"></span></button>
+      </div>
+      <div class="hist-header-right">
+        <button class="btn-tool" onclick="copyToClipboard()" title="コピー">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+        <button class="btn-tool" onclick="document.getElementById('file-import').click()" title="復元">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button>
+        <button class="btn-tool" onclick="openExportModal()" title="保存">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </button>
+        <input type="file" id="file-import" accept=".json" onchange="handleImportFile(event)">
+      </div>
     </div>
     <div class="hist-body"><div id="history-list"><div class="history-empty">まだ記録がありません</div></div></div>
   </div>
@@ -429,6 +444,7 @@ let appData = { sets:[], currentSetId:null };
 let currentPhoto=null, editPhoto=null;
 let deleteTargetRecId=null, editTargetRecId=null, deleteTargetSetId=null;
 let importBuffer=null, importSelectedIds=[], importStep=1;
+let sortKey = 'id', sortAsc = false; // ソート状態の管理
 const STORAGE_KEY = 'uriage_v2';
 
 function genId(){ return 'set_'+Date.now()+'_'+Math.random().toString(36).slice(2,6); }
@@ -522,7 +538,9 @@ function renderSetsModal(){
 }
 
 function switchSet(id){
-  appData.currentSetId=id; saveData(); updateSubtitle(); render();
+  appData.currentSetId=id; 
+  sortKey='id'; sortAsc=false; // ソートリセット
+  saveData(); updateSubtitle(); render();
   closeModal('modal-sets');
 }
 
@@ -535,6 +553,7 @@ function doCreateSet(){
   const name = document.getElementById('new-set-name').value.trim()||'新しいセット';
   const ns = { id:genId(), name, records:[], counter:0, createdAt:new Date().toISOString() };
   appData.sets.push(ns); appData.currentSetId=ns.id;
+  sortKey='id'; sortAsc=false; // ソートリセット
   saveData(); updateSubtitle(); render();
   closeModal('modal-new-set'); closeModal('modal-sets');
   toast(`「${name}」を作成しました`);
@@ -565,6 +584,7 @@ function doDeleteSet(){
   if(appData.currentSetId===deleteTargetSetId){
     if(appData.sets.length){ appData.currentSetId=appData.sets[0].id; }
     else { const ns={id:genId(),name:'デフォルト',records:[],counter:0,createdAt:new Date().toISOString()}; appData.sets.push(ns); appData.currentSetId=ns.id; }
+    sortKey='id'; sortAsc=false;
   }
   saveData(); updateSubtitle(); render(); renderSetsModal();
   closeModal('modal-delete-set'); toast('セットを削除しました');
@@ -666,6 +686,17 @@ function handleEditPhoto(e){ const f=e.target.files[0]; if(!f)return; e.target.v
 function clearEditPhoto(){ editPhoto=null; updateEditPhotoUI(); }
 function viewPhoto(id){ const cs=currentSet(); if(!cs)return; const r=cs.records.find(r=>r.id===id); if(!r||!r.photo)return; document.getElementById('photo-full').src=r.photo; openModal('modal-photo'); }
 
+/* ===== ソート ===== */
+function setSort(key) {
+  if (sortKey === key) {
+    sortAsc = !sortAsc;
+  } else {
+    sortKey = key;
+    sortAsc = false;
+  }
+  render();
+}
+
 /* ===== レンダリング ===== */
 function render(){
   const cs=currentSet(), records=cs?cs.records:[];
@@ -674,9 +705,29 @@ function render(){
   document.getElementById('total-mass').innerHTML=`${Number(tm.toFixed(2)).toLocaleString()}<small>g</small>`;
   const up=document.getElementById('total-uprice');
   up.innerHTML=tm>0?`${Math.round((tp/tm)*100).toLocaleString()}<small style="font-size:10px;margin-left:1px;">円/100g</small>`:`—<small style="font-size:10px;margin-left:1px;">円/100g</small>`;
+  
+  // ソートUIの更新
+  ['id','mass','price'].forEach(k=>{
+    const b=document.getElementById('sort-btn-'+k), i=document.getElementById('sort-ic-'+k);
+    if(b&&i){
+      if(k===sortKey){ b.classList.add('active'); i.textContent=sortAsc?'▲':'▼'; }
+      else { b.classList.remove('active'); i.textContent=''; }
+    }
+  });
+
   const list=document.getElementById('history-list');
   if(!records.length){list.innerHTML='<div class="history-empty">まだ記録がありません</div>';return;}
-  list.innerHTML=[...records].reverse().map(r=>{
+  
+  // ソート適用
+  let sorted = [...records];
+  sorted.sort((a,b)=>{
+    const va=a[sortKey], vb=b[sortKey];
+    if(va<vb) return sortAsc ? -1 : 1;
+    if(va>vb) return sortAsc ? 1 : -1;
+    return b.id - a.id; // 同値の場合は追加順(No.)降順で安定させる
+  });
+
+  list.innerHTML=sorted.map(r=>{
     const nh=r.note?`<div class="h-note">${escHtml(r.note)}</div>`:'';
     const th=r.photo?`<img class="h-thumb" src="${r.photo}" alt="写真" onclick="viewPhoto(${r.id})">` :'';
     const unitPrice=r.mass>0?`${Math.round((r.price/r.mass)*100).toLocaleString()}円/100g`:'—';
