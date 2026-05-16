@@ -136,6 +136,7 @@ cursor: pointer;
 .h-vals { display: flex; align-items: baseline; gap: 10px; flex-shrink: 0; }
 .h-num { font-size: 16px; font-weight: 600; color: var(--text); line-height: 1; }
 .h-num small { font-size: 10px; font-weight: 400; color: var(--text-sub); margin-left: 1px; }
+.h-uprice { font-size: 10px; color: var(--text-xs); margin-left: 2px; } /* 追加: 履歴の100g単価スタイル */
 .h-thumb { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 6px; object-fit: cover; border: 1px solid var(--border-light); cursor: pointer; display: block; }
 .h-thumb:active { opacity: .75; }
 .h-btns { display: flex; gap: 5px; flex-shrink: 0; }
@@ -257,7 +258,7 @@ cursor: pointer;
       <span class="s-val" id="total-price">0<small>円</small></span>
       <span class="summary-sep">/</span>
       <span class="s-val" id="total-mass">0<small>g</small></span>
-      <span class="s-uprice" id="total-uprice">—<small style="font-size:10px;margin-left:1px;">円/g</small></span>
+      <span class="s-uprice" id="total-uprice">—<small style="font-size:10px;margin-left:1px;">円/100g</small></span>
     </div>
   </div>
 
@@ -282,6 +283,8 @@ cursor: pointer;
 <input type="file" id="camera-edit-shoot" accept="image/*" capture="environment" onchange="handleEditPhoto(event)">
 <input type="file" id="camera-edit-lib"   accept="image/*"                       onchange="handleEditPhoto(event)">
 
+<!-- セット切り替え -->
+
 <div class="modal-overlay" id="modal-sets">
   <div class="modal">
     <div class="modal-sets-inner">
@@ -296,6 +299,8 @@ cursor: pointer;
   </div>
 </div>
 
+<!-- 新規セット作成 -->
+
 <div class="modal-overlay" id="modal-new-set">
   <div class="modal">
     <div class="modal-title">新規セットを作成</div>
@@ -309,6 +314,8 @@ cursor: pointer;
   </div>
 </div>
 
+<!-- セット削除確認 -->
+
 <div class="modal-overlay" id="modal-delete-set">
   <div class="modal">
     <div class="modal-title">セットを削除</div>
@@ -319,6 +326,8 @@ cursor: pointer;
     </div>
   </div>
 </div>
+
+<!-- リセット確認 -->
 
 <div class="modal-overlay" id="modal-reset">
   <div class="modal">
@@ -331,6 +340,8 @@ cursor: pointer;
   </div>
 </div>
 
+<!-- 記録削除確認 -->
+
 <div class="modal-overlay" id="modal-delete-rec">
   <div class="modal">
     <div class="modal-title">削除確認</div>
@@ -341,6 +352,8 @@ cursor: pointer;
     </div>
   </div>
 </div>
+
+<!-- 記録編集 -->
 
 <div class="modal-overlay" id="modal-edit">
   <div class="modal">
@@ -360,6 +373,8 @@ cursor: pointer;
   </div>
 </div>
 
+<!-- バックアップ保存 -->
+
 <div class="modal-overlay" id="modal-export">
   <div class="modal">
     <div class="modal-title">バックアップを保存</div>
@@ -372,6 +387,8 @@ cursor: pointer;
     </div>
   </div>
 </div>
+
+<!-- データ復元 -->
 
 <div class="modal-overlay" id="modal-import">
   <div class="modal">
@@ -395,6 +412,8 @@ cursor: pointer;
     </div>
   </div>
 </div>
+
+<!-- 写真拡大 -->
 
 <div class="modal-overlay" id="modal-photo">
   <div class="modal"><img id="photo-full" src="" alt="">
@@ -654,15 +673,16 @@ function render(){
   document.getElementById('total-price').innerHTML=`${tp.toLocaleString()}<small>円</small>`;
   document.getElementById('total-mass').innerHTML=`${Number(tm.toFixed(2)).toLocaleString()}<small>g</small>`;
   const up=document.getElementById('total-uprice');
-  up.innerHTML=tm>0?`${(Math.round(tp/tm*10)/10).toLocaleString()}<small style="font-size:10px;margin-left:1px;">円/g</small>`:`—<small style="font-size:10px;margin-left:1px;">円/g</small>`;
+  up.innerHTML=tm>0?`${Math.round((tp/tm)*100).toLocaleString()}<small style="font-size:10px;margin-left:1px;">円/100g</small>`:`—<small style="font-size:10px;margin-left:1px;">円/100g</small>`;
   const list=document.getElementById('history-list');
   if(!records.length){list.innerHTML='<div class="history-empty">まだ記録がありません</div>';return;}
   list.innerHTML=[...records].reverse().map(r=>{
     const nh=r.note?`<div class="h-note">${escHtml(r.note)}</div>`:'';
     const th=r.photo?`<img class="h-thumb" src="${r.photo}" alt="写真" onclick="viewPhoto(${r.id})">` :'';
+    const unitPrice=r.mass>0?`${Math.round((r.price/r.mass)*100).toLocaleString()}円/100g`:'—';
     return `<div class="h-item${r.photo?' has-photo':''}">
       <div class="h-r1"><span class="h-id">No.${r.id}</span><span class="h-dt">${fmtDT(r.datetime)}</span></div>
-      <div class="h-r2"><div class="h-vals"><span class="h-num">${Number(r.mass.toFixed(2)).toLocaleString()}<small>g</small></span><span class="h-num">${r.price.toLocaleString()}<small>円</small></span></div><div class="h-btns"><button class="btn-edit" onclick="confirmEditRecord(${r.id})">編集</button><button class="btn-del" onclick="confirmDeleteRecord(${r.id})">削除</button></div></div>
+      <div class="h-r2"><div class="h-vals"><span class="h-num">${Number(r.mass.toFixed(2)).toLocaleString()}<small>g</small></span><span class="h-num">${r.price.toLocaleString()}<small>円</small></span><span class="h-uprice">${unitPrice}</span></div><div class="h-btns"><button class="btn-edit" onclick="confirmEditRecord(${r.id})">編集</button><button class="btn-del" onclick="confirmDeleteRecord(${r.id})">削除</button></div></div>
       ${nh}${th}</div>`;
   }).join('');
 }
